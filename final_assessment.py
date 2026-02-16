@@ -37,11 +37,7 @@ def sales_report_generator(sales_data):
         res[prod]["units_sold"] += quantity
     
     return res
-print(sales_report_generator([
-    {"product": "Laptop", "price": 1000, "quantity": 2},
-    {"product": "Mouse", "price": 25, "quantity": 5},
-    {"product": "Laptop", "price": 1000, "quantity": 1}
-]))
+
 
 def temperature_analyzer(temperatures, threshold):
     """

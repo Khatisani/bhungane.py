@@ -289,7 +289,6 @@ def leaderboard_ranker(scores):
     Raises:
         ValueError: If tuple doesn't have exactly 2 elements
     """
-    pos = 1
 
     for score in scores:
         if len(score) != 2:
@@ -297,17 +296,21 @@ def leaderboard_ranker(scores):
         
     sorted_scores = sorted(scores, key=lambda s: s[1], reverse=True)
     res = []
-    for idx, s in enumerate(sorted_scores):
-        if s[1] in res[idx]:
-            res.append((s[0], s[1], pos))
-            continue
-        if s[1] not in res[idx]:
-            res.append((s[0], s[1], pos))
-            pos += 1
-    print(100 in res[:len(res)])
-    print(sorted(res, key=lambda s: s[1], reverse=True))
+    pos = 1
 
-leaderboard_ranker([("A", 100), ("B", 100), ("C", 90)])
+    for idx, s in enumerate(sorted_scores):
+        if idx == 0:
+            rank = 1
+        elif s[1] == sorted_scores[idx - 1][1]:
+            rank = res[idx - 1][2]
+        else:
+            rank = idx + 1
+        
+        res.append((s[0], s[1], rank))
+    
+    return res
+
+print(leaderboard_ranker([("A", 100), ("B", 100), ("C", 90)]))
 
 def smart_cache_system(capacity):
     """
